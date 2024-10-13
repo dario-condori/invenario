@@ -19,9 +19,11 @@ return new class extends Migration
             $table->date('fecha')->comment('Fecha en la cual se procede a la venta de ladrillos');
             $table->unsignedBigInteger('producto_id')->comment('Identificador del producto a comercializar por el vehículo');
             $table->decimal('cantidad_compra')->comment('Cantidad del producto comprado para comercializar');
-            $table->decimal('precio_compra')->comment('Precio de compra del producto a comercializar');
+            $table->decimal('precio_compra')->comment('Precio de compra del producto a comercializar por cada 1000 unidades');
+            $table->decimal('precio_compra_total')->comment('Precio total de compra del producto a comercializar');
             $table->decimal('cantidad_venta')->comment('Cantidad del producto vendido al cliente');
-            $table->decimal('precio_venta')->comment('Precio de venta del producto al cliente');
+            $table->decimal('precio_venta')->comment('Precio de venta del producto al cliente por cada 1000 unidades');
+            $table->decimal('precio_venta_total')->comment('Precio de venta total del producto al cliente');
             $table->decimal('cantidad_saldo')->comment('Cantidad del producto que quedó como saldo');
             $table->decimal('precio_saldo')->comment('Precio del producto que quedó como saldo');
             $table->decimal('transporte')->default(0)->comment('Precio del transporte por el traslado de productos');
