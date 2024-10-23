@@ -20,6 +20,6 @@ class Combustible extends Model
     //--- para identificar combustible del vehiculo
     public function vehiculo()
     {
-        return $this->belongsTo('App\Models\Admin\Vehiculos', 'vehiculo_id');
+        return $this->belongsTo('App\Models\Admin\Vehiculo', 'vehiculo_id');
     }
 }

@@ -25,5 +25,41 @@ class ProductosSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        DB::table('productos')->insert([
+            'descripcion' => 'Roja Quiba',
+            'sigla' => 'RQ',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('productos')->insert([
+            'descripcion' => 'Incercar',
+            'sigla' => 'INC',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('productos')->insert([
+            'descripcion' => 'Incercar Rayado',
+            'sigla' => 'INCRAY',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('productos')->insert([
+            'descripcion' => 'Cabezas',
+            'sigla' => 'CAB',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('productos')->insert([
+            'descripcion' => 'Bota Agua',
+            'sigla' => 'BOTAG',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('productos')->insert([
+            'descripcion' => 'Ceranitech',
+            'sigla' => 'CERTECH',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

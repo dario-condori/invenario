@@ -8,11 +8,12 @@ use App\Http\Controllers\ProformaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+    return to_route('admin.dashboard',['fecha_comercio'=>date('Y-m-d')]);
 });
 
 Route::middleware('auth')->group(function(){
-    Route::get('/admin/dashboard', [InicioController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/dashboard/{fecha_comercio}', [InicioController::class, 'dashboard'])->name('admin.dashboard');
 });
 
 //---Gestion de vehiculos
@@ -35,10 +36,19 @@ Route::middleware('auth')->group(function(){
 
 //---Administración de comercialización
 Route::middleware('auth')->group(function(){
-    Route::get('/comercio', [ComercioController::class, 'listado'])->name('comercio.listado');
+    Route::get('/comercio/{fecha_comercio}', [ComercioController::class, 'listado'])->name('comercio.listado');
     Route::get('/comercio/seleccionar/vehiculo', [ComercioController::class, 'seleccionarVehiculo'])->name('comercio.seleccionarVehiculo');
     Route::get('/comercio/operacion/{vehiculo}', [ComercioController::class, 'operacion'])->name('comercio.operacion');
     Route::post('/comercio/operacion/guardar', [ComercioController::class, 'operacionGuardar'])->name('comercio.operacion.guardar');
+    Route::post('/comercio/combustible/vehiculo', [ComercioController::class, 'combustibleVehiculo'])->name('comercio.operacion.combustible');
+    Route::get('/comercio/operacion/productos/{comercio}', [ComercioController::class, 'comercioProductos'])->name('comercio.operacion.productos');
+    Route::post('/comercio/operacion/productos/guardar', [ComercioController::class, 'comercioProductoGuardar'])->name('comercio.operacion.producto.guardar');
+    Route::delete('/comercio/operacion/productos/eliminar', [ComercioController::class, 'comercioProductoEliminar'])->name('comercio.operacion.producto.eliminar');
+    Route::post('/comercio/operacion/productos/edit', [ComercioController::class, 'comercioProductoEdit'])->name('comercio.operacion.producto.edit');
+    Route::post('/comercio/operacion/productos/actualizar', [ComercioController::class, 'comercioProductoActualizar'])->name('comercio.operacion.producto.actualizar');
+    Route::get('/comercio/operacion/pdf/{fecha_comercio}', [ComercioController::class, 'comercioPdf'])->name('comercio.operacion.pdf');
+    Route::get('/comercio/reporte/semanal/{fecha_comercio}', [ComercioController::class, 'reporteSemanal'])->name('comercio.reporte.semanal');
+    Route::delete('/comercio/operacion/eliminar', [ComercioController::class, 'comercioOperacionEliminar'])->name('comercio.operacion.eliminar');
 });
 
 Route::get('/dashboard', function () {

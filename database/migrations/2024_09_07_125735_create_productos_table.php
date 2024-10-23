@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->id()->comment('Identificador de registro a nivel de la tabla');
             $table->string('descripcion', 75)->comment('Descripción del producto');
-            $table->string('sigla', 6)->comment('Sigla del producto');
+            $table->string('sigla', 8)->comment('Sigla del producto');
             $table->timestamps();
 
             $table->comment('Tabla paramétrica de los productos');

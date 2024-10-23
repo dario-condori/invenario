@@ -10,4 +10,9 @@ class Proforma extends Model
     use HasFactory;
 
     protected $table='proformas';
+
+    public function comercios()
+    {
+        return $this->belongsTo('App\Models\Comercio\Comercio', 'proforma_id');
+    }
 }

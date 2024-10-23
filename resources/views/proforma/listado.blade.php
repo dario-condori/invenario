@@ -10,7 +10,7 @@
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
                 <div>
                     <h3 class="fw-bold mb-3">Administración de vehículos, desde {{date('d/m/Y',strtotime($primerDia))}} a {{date('d/m/Y',strtotime($ultimoDia))}}</h3>
-                    <button type="button" class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#modalNuevaProforma">
                         <span class="btn-label"><i class="fa fa-plus"></i></span>
                         Generar proforma
                     </button>
@@ -88,8 +88,8 @@
         </div>
     </div>
 
-  <!-- Modal para nueva proforma-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal para nueva proforma-->
+    <div class="modal fade" id="modalNuevaProforma" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">

@@ -18,8 +18,20 @@ class Comercio extends Model
     }
 
     //--- para identificar el producto
-    public function producto()
+    public function comercioProductos()
     {
-        return $this->belongsTo('App\Models\Comercio\Producto', 'producto_id');
+        return $this->hasMany('App\Models\Comercio\ComercioProductos', 'comercio_id');
+    }
+
+    //--- para identificar el vehiculo que transporta
+    public function vehiculo()
+    {
+        return $this->belongsTo('App\Models\Admin\Vehiculo', 'vehiculo_id');
+    }
+
+    //--- para identificar la proforma
+    public function proforma()
+    {
+        return $this->belongsTo('App\Models\Comercio\Proforma', 'proforma_id');
     }
 }

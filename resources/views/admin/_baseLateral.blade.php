@@ -23,7 +23,7 @@
     <div class="sidebar-content">
         <ul class="nav nav-secondary">
             <li id="mResumen" class="nav-item">
-                <a href="{{ route('admin.dashboard') }}">
+                <a href="{{ route('admin.dashboard',['fecha_comercio'=>date('Y-m-d')]) }}">
                     <i class="fas fa-desktop"></i>
                     <p>Resumen</p>
                     <span class="badge badge-success">4</span>
@@ -42,9 +42,15 @@
                 </a>
             </li>
             <li id="mComercializacion" class="nav-item">
-                <a href="{{ route('comercio.listado') }}">
+                <a href="{{ route('comercio.listado',['fecha_comercio'=>date('Y-m-d')]) }}">
                     <i class="fas fa-dollar-sign"></i>
                     <p>Comercialización</p>
+                </a>
+            </li>
+            <li id="mReporteSemanal" class="nav-item">
+                <a href="{{ route('comercio.reporte.semanal',['fecha_comercio'=>date('Y-m-d')]) }}">
+                    <i class="fas fa-dollar-sign"></i>
+                    <p>Reporte Semanal</p>
                 </a>
             </li>
             <li class="nav-item">

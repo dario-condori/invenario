@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin\Personal;
+use App\Models\Comercio\ComercioProductos;
 use App\Models\Comercio\Proforma;
 use App\Models\Comercio\ProformaProductos;
 use App\Models\Comercio\Producto;
@@ -66,6 +67,20 @@ class ProformaController extends Controller
     {
         $proforma = Proforma::find($id);
         $productosProforma = ProformaProductos::where('proforma_id', $proforma->id)->get();
+        if(!count($productosProforma)){
+            $comercio_id = $proforma->comercios[0]->id;
+            $comProductos = ComercioProductos::where('comercio_id', $comercio_id)->get();
+            foreach($comProductos as $item){
+                $prod = new ProformaProductos();
+                $prod->proforma_id = $proforma->id;
+                $prod->producto_id = $item->producto_id;
+                $prod->cantidad = $item->cantidad_venta;
+                $prod->precio_unitario = $item->precio_venta;
+                $prod->precio_total = $item->precio_venta_total;
+                $prod->save();
+            }
+            $productosProforma = ProformaProductos::where('proforma_id', $proforma->id)->get();
+        }
         $pdf = PDF::loadView('proforma.pdf',[
             'proforma' => $proforma,
             'productosProforma' => $productosProforma,

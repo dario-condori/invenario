@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Admin\TipoOrigen;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,6 +20,10 @@ class DatabaseSeeder extends Seeder
             ProductosSeeder::class,
             VehiculosSeeder::class,
             PersonalSeeder::class,
+            CombustibleSeeder::class,
+            ComercioSeeder::class,
+            TipoAlmacenSeeder::class,
+            TipoOrigenSeeder::class,
         ]);
     }
 }

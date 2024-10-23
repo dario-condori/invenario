@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('sueldo')->comment('Monto del sueldo acordado');
             $table->decimal('extra')->comment('Monto extraordinario acordado');
             $table->unsignedBigInteger('usuario_id')->comment('Identificador de usuario que realiza el registro');
+            $table->boolean('activo')->default(true)->comment('Estado del personal si se encuentra activo o no');
             $table->timestamps();
 
             $table->foreign('expedido_id')->references('id')->on('departamento');

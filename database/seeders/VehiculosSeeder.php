@@ -14,7 +14,7 @@ class VehiculosSeeder extends Seeder
     public function run(): void
     {
         DB::table('vehiculos')->insert([
-            'marca' => 'Nissan Condori',
+            'marca' => 'Nissan Condor',
             'modelo' => '2005',
             'color' => 'Blanco',
             'placa' => '1234 ABC',
