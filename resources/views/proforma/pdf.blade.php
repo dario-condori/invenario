@@ -33,6 +33,11 @@
         @page{
             margin: 0.3cm 0.3cm;
         }
+        body {
+            background-image: url("{{asset('plantilla/img/ladrillos.jpg')}}");
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
         #header{
             position: fixed;
             top: 0cm;

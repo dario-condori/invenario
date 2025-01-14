@@ -29,7 +29,7 @@ class ProformaController extends Controller
         if($diaSemana==0){ $diaSemana=7; } // A la fecha recibida, le sumamos el dia de la semana menos siete y obtendremos el domingo
         $ultimoDia=date("Y-m-d",mktime(0,0,0, $mes, $dia+(7-$diaSemana), $year));
 
-        $proformas = Proforma::all();
+        $proformas = Proforma::orderBy('id', 'DESC')->get();
 
         return view('proforma.listado', compact('primerDia', 'ultimoDia', 'proformas'));
     }

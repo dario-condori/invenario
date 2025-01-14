@@ -23,6 +23,10 @@ Route::middleware('auth')->group(function(){
     Route::post('/admin/vehiculos/guardar', [VehiculoController::class, 'vehiculosGuardar'])->name('admin.vehiculos.guardar');
     Route::get('/admin/combustible/{vehiculo}', [VehiculoController::class, 'vehiculosCombustible'])->name('admin.vehiculos.combustible');
     Route::post('/admin/combustible/cargar', [VehiculoController::class, 'combustibleCargar'])->name('admin.combustible.cargar');
+    Route::post('/admin/combustible/historial', [VehiculoController::class, 'vehiculosCombustibleHistorial'])->name('admin.vehiculos.historial');
+    Route::get('/admin/vehiculos/mantenimiento/{vehiculo}', [VehiculoController::class, 'vehiculoMantenimiento'])->name('admin.vehiculos.mantenimiento');
+    Route::post('/admin/vehiculos/datos', [VehiculoController::class, 'datosVehiculo'])->name('admin.vehiculos.datos');
+    Route::post('/admin/vehiculos/mantenimiento/guardar', [VehiculoController::class, 'mantenimientoGuardar'])->name('admin.vehiculos.mantenimiento.guardar');
 });
 
 //---Gestion de proforma

@@ -35,11 +35,11 @@
                                 <h3 class="text-info fw-bold">{{ number_format($cantidad_compra,0) }} Unid</h3>
                             </div>
                             <div class="progress progress-sm">
-                                <div class="progress-bar bg-info w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-info w-{{number_format(date('w')*100/7,0)}}" role="progressbar" aria-valuenow="{{number_format(date('w')*100/7,0)}}" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                             <div class="d-flex justify-content-between mt-2">
-                                <p class="text-muted mb-0">Variación: </p>
-                                <p class="text-muted mb-0">75%</p>
+                                <p class="text-muted mb-0">Dias: </p>
+                                <p class="text-muted mb-0">{{number_format(date('w')*100/7,0)}}%</p>
                             </div>
                         </div>
                     </div>

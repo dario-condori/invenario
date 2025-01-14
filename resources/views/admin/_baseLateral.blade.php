@@ -53,7 +53,7 @@
                     <p>Reporte Semanal</p>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base">
                     <i class="fas fa-layer-group"></i>
                     <p>Base</p>
@@ -78,7 +78,7 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li> --}}
         </ul>
     </div>
 </div>

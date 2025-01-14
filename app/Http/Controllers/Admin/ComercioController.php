@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Combustible;
 use App\Models\Admin\Personal;
+use App\Models\Admin\TanqueCombustible;
 use App\Models\Admin\TipoAlmacen;
 use App\Models\Admin\TipoOrigen;
 use App\Models\Comercio\Proforma;
@@ -93,7 +94,10 @@ class ComercioController extends Controller
 
     public function operacionGuardar(Request $request)
     {
+        // dd($request->input());
         $request->validate([
+            'cliente' => 'required|string|max:75',
+            'cliente_celular' => 'required|string|max:20|min:8',
             'vehiculo_id' => 'required|integer',
             'combustible_id' => 'required|integer',
             'vuelta' => 'required|integer',
@@ -102,16 +106,23 @@ class ComercioController extends Controller
             'lugar_venta' => 'required',
             'personal_id' => 'required|integer',
             'proforma_id' => 'required',
+            'refresco' => 'required|numeric',
+            'peaje' => 'required|numeric',
+            'viatico' => 'required|numeric',
+            'corte_mitad' => 'required|numeric',
+            'costo_combustible' => 'required|numeric',
         ],[
             'combustible_id.required' => 'Sin combustible'
         ]);
         
+        //---verifica si es venta a una proforma
         if($request->proforma_id == 0){
+            //---si no hay proforma, entonces se crea
             $proforma = new Proforma();
             $proforma->gestion = date('Y');
             $proforma->fecha_registro = date('Y-m-d');
-            $proforma->cliente_ci = 0;
-            $proforma->cliente_nombre = 'SN';
+            $proforma->cliente_ci = $request->cliente_celular;
+            $proforma->cliente_nombre = $request->cliente;
             $proforma->usuario_id = Auth::id();
             $proforma->save();
             $proforma_id = $proforma->id;
@@ -120,20 +131,38 @@ class ComercioController extends Controller
         }
 
         $comercio = new Comercio();
+        $comercio->cliente = $request->cliente;
+        $comercio->cliente_celular = $request->cliente_celular;
         $comercio->vehiculo_id = $request->vehiculo_id;
         $comercio->combustible_id = $request->combustible_id;
         $comercio->vuelta = $request->vuelta;
         $comercio->fecha = $request->fecha;
         $comercio->transporte = $request->transporte;
         $comercio->lugar_venta = $request->lugar_venta;
+        $comercio->observacion = $request->observacion;
+        $comercio->refresco = $request->refresco;
+        $comercio->peaje = $request->peaje;
+        $comercio->viatico = $request->viatico;
+        $comercio->corte_mitad = $request->corte_mitad;
+        $comercio->costo_combustible = $request->costo_combustible;
         $comercio->personal_id = $request->personal_id;
         $comercio->proforma_id = $proforma_id;
         $comercio->usuario_id = Auth::user()->id;
         $comercio->save();
+
+        //---actualizando tanque combustible
+        $tanque = TanqueCombustible::where('vehiculo_id', $request->vehiculo_id)->first();
+        // $tanque->vehiculo_id = $request->vehiculo_id;
+        $tanque->fecha = $request->fecha;
+        // $tanque->precio_unitario = $request->precio_unitario;
+        $tanque->costo = $tanque->costo - $request->costo_combustible;
+        $tanque->usuario_id = Auth::user()->id;
+        $tanque->save();
         
-        $profProforma = ProformaProductos::where('proforma_id', $proforma_id)->get();
-        if(count($profProforma)){
-            foreach($profProforma as $item){
+        //---se recupera los producto de la proforma para adicionar al comercio
+        $profProductos = ProformaProductos::where('proforma_id', $proforma_id)->get();
+        if(count($profProductos)){
+            foreach($profProductos as $item){
                 $comProd = new ComercioProductos();
                 $comProd->comercio_id = $comercio->id;
                 $comProd->producto_id = $item->producto_id;
@@ -169,12 +198,12 @@ class ComercioController extends Controller
                 return response()->json([
                     'estado' => true,
                     'combustible' => $combustible->id,
-                    'mensaje' => '<label class="text-success"><i class="fas fa-truck-moving"></i> Cargado</label>',
+                    'mensaje' => '<label class="text-success"><i class="fas fa-truck-moving"></i> Tiene diesel</label>',
                 ]);
             }else{
                 return response()->json([
                     'estado' => false,
-                    'mensaje' => '<label class="text-danger"><i class="fas fa-truck-moving"></i> No tiene</label>',
+                    'mensaje' => '<label class="text-danger"><i class="fas fa-truck-moving"></i> Sin diesel</label>',
                     'alerta' => 'El vehículo seleccionado no tiene Combustible',
                 ]);
             }

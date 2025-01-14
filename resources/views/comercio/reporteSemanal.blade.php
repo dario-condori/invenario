@@ -1,7 +1,7 @@
 @extends('admin._base-sm')
 
 @section('titulo')
-    Vehículos
+    Reporte semanal
 @endsection
 
 @section('contenido')
@@ -23,6 +23,10 @@
 
                     <input type="hidden" name="fecha_comercio" id="fecha_comercio" value="{{$fecha_comercio}}">
 
+                    <a href="{{ route('comercio.listado',['fecha_comercio'=>date('Y-m-d')]) }}" class="btn btn-success">
+                        <i class="fas fa-dollar-sign"></i>
+                        Comercialización
+                    </a>
                     <a href="{{ route('comercio.operacion.pdf',['fecha_comercio'=>date('Y-m-d', strtotime($fecha_comercio))]) }}" target="_blank" class="btn btn-danger">
                         <span class="btn-label"><i class="fas fa-file-pdf"></i></span>
                         PDF
@@ -56,8 +60,9 @@
                                         <th scope="col" class="text-center">Total<br>Venta Bs.</th>
                                         <th scope="col" class="text-center">Cantidad<br>Sobrante</th>
                                         <th scope="col" class="text-center">Saldo_a<br>Cobrar Bs</th>
-                                        <th scope="col" class="text-center">Lugar</th>
+                                        <th scope="col" class="text-center">Lugar<br>cliente</th>
                                         <th scope="col" class="text-center">Transporte</th>
+                                        <th scope="col" class="text-center">Otros gastos</th>
                                         <th scope="col" class="text-center">Vendedor</th>
                                     </tr>
                                 </thead>
@@ -96,8 +101,17 @@
                                                 <td>{{number_format($comProd->cantidad_compra-$comProd->cantidad_venta,0)}}</td>
                                                 <td>{{number_format(($comProd->precio_compra/1000)*($comProd->cantidad_compra-$comProd->cantidad_venta),2)}}</td>
                                                 @if($nf==1)
-                                                    <td rowspan="{{$filas}}">{{ $item->lugar_venta }}</td>
+                                                    <td rowspan="{{$filas}}">
+                                                        {{ $item->lugar_venta }} <br>
+                                                        {{ $item->cliente }} ({{ $item->cliente_celular }}) <br>
+                                                    </td>
                                                     <td rowspan="{{$filas}}">{{ $item->transporte }}</td>
+                                                    <td rowspan="{{$filas}}">
+                                                        Refresco:{{ number_format($item->refresco,0) }} <br>
+                                                        Peaje:{{ number_format($item->peaje,0) }} <br>
+                                                        Viatico:{{ number_format($item->viatico,0) }} <br>
+                                                        Mitades:{{ number_format($item->corte_mitad,0) }} <br>
+                                                    </td>
                                                     <td rowspan="{{$filas}}">{{ $item->personal->nombres }} {{ $item->personal->apellido_1 }} {{ $item->personal->apellido_1 }}</td>
                                                 @endif
                                             </tr>

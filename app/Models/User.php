@@ -54,4 +54,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Admin\Combustible', 'usuario_id');
     }
+
+    //--- para listar el personal
+    public function personal()
+    {
+        return $this->hasMany('App\Models\Admin\Personal', 'usuario_id');
+    }
 }
