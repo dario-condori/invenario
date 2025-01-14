@@ -20,7 +20,7 @@ class VehiculoController extends Controller
 
     private $dias = array('Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab');
     private $meses = array('', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic');
-    //---vehiculos
+    //---listado de vehiculos
     public function vehiculos()
     {
         
