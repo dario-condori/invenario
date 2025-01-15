@@ -29,6 +29,13 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
+                                            <label for="factura">Factura:</label>
+                                            <input type="text" class="form-control" name="factura" id="factura" value="{{ old('factura') }}" placeholder="..."/>
+                                            @error('factura')
+                                                <div style="color:red; font-size: 75%;">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
                                             <label for="precio_unitario">Precio litro</label>
                                             <input type="number" class="form-control" value="3.72" name="precio_unitario" id="precio_unitario" value="{{ old('precio_unitario') }}" placeholder="..." onchange="litrosCombustible()"/>
                                             @error('precio_unitario')

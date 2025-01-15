@@ -128,6 +128,7 @@ class VehiculoController extends Controller
         $request->validate([
             'vehiculo_id' => 'required|integer',
             'fecha' => 'required|date',
+            'factura' => 'required|string',
             'precio_unitario' => 'required|decimal:1,10',
             'costo' => 'required|integer',
         ]);
@@ -135,6 +136,7 @@ class VehiculoController extends Controller
         $combustible = new Combustible();
         $combustible->vehiculo_id = $request->vehiculo_id;
         $combustible->fecha = $request->fecha;
+        $combustible->factura = $request->factura;
         $combustible->precio_unitario = $request->precio_unitario;
         $combustible->costo = $request->costo;
         $combustible->volumen = number_format($request->costo/$request->precio_unitario,2);
