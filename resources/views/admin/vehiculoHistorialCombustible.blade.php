@@ -26,8 +26,7 @@
                         {{ number_format($item->volumen, 0) }}_lt.
                     </td>
                     <td>
-                        00000
-                        {{-- {{ $item->usuario->personal[0]->nombres }} {{ $item->usuario->personal[0]->apellido_1 }} --}}
+                        {{ $item->factura }}
                     </td>
                     <td>
                         {{-- <a href="{{ route('proforma.generar', ['id'=>$item->id]) }}" title="Editar productos de la proforma" class="btn btn-success btn-round btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" >

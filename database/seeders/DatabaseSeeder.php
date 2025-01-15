@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             ComercioSeeder::class,
             TipoAlmacenSeeder::class,
             TipoOrigenSeeder::class,
+            TipoServicioSeeder::class,
         ]);
     }
 }
