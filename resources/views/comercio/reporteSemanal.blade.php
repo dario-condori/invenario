@@ -71,12 +71,20 @@
                                     @php($compra_total=0)
                                     @php($cant_venta=0)
                                     @php($venta_total=0)
-                                    @php($saldo=0)
+                                    @php($cant_saldo=0)
+                                    @php($saldo_total=0)
                                     @php($transporte=0)
+                                    @php($refresco=0)
+                                    @php($peaje=0)
+                                    @php($viatico=0)
+                                    @php($costo_combustible=0)
                                     @php($nro=0)
                                     @forelse ($vueltas as $item)
-                                        @php($saldo = $saldo + ($item->precio_saldo / 1000))
                                         @php($transporte = $transporte + $item->transporte)
+                                        @php($refresco = $refresco + $item->refresco)
+                                        @php($peaje = $peaje + $item->peaje)
+                                        @php($viatico = $viatico + $item->viatico)
+                                        @php($costo_combustible = $costo_combustible + $item->costo_combustible)
                                         @php($nro++)
                                         @php($filas = count($item->comercioProductos) )
                                         @php($nf=0)
@@ -98,6 +106,8 @@
                                                 <td>{{number_format($comProd->cantidad_venta,0)}}</td>
                                                 <td>{{number_format($comProd->precio_venta,2)}}</td>
                                                 <td>{{number_format($comProd->precio_venta_total,2)}}</td>
+                                                    @php($cant_saldo = $cant_saldo + ($comProd->cantidad_compra-$comProd->cantidad_venta))
+                                                    @php($saldo_total = $saldo_total + ($comProd->precio_compra/1000)*($comProd->cantidad_compra-$comProd->cantidad_venta))
                                                 <td>{{number_format($comProd->cantidad_compra-$comProd->cantidad_venta,0)}}</td>
                                                 <td>{{number_format(($comProd->precio_compra/1000)*($comProd->cantidad_compra-$comProd->cantidad_venta),2)}}</td>
                                                 @if($nf==1)
@@ -107,10 +117,18 @@
                                                     </td>
                                                     <td rowspan="{{$filas}}">{{ $item->transporte }}</td>
                                                     <td rowspan="{{$filas}}">
-                                                        Refresco:{{ number_format($item->refresco,0) }} <br>
-                                                        Peaje:{{ number_format($item->peaje,0) }} <br>
-                                                        Viatico:{{ number_format($item->viatico,0) }} <br>
-                                                        Mitades:{{ number_format($item->corte_mitad,0) }} <br>
+                                                        @if($item->refresco != 0)
+                                                            Refresco:{{ number_format($item->refresco,0) }} <br>
+                                                        @endif
+                                                        @if($item->peaje != 0)
+                                                            Peaje:{{ number_format($item->peaje,0) }} <br>
+                                                        @endif
+                                                        @if($item->viatico != 0)
+                                                            Viatico:{{ number_format($item->viatico,0) }} <br>
+                                                        @endif
+                                                        @if($item->corte_mitad != 0)
+                                                            Mitades:{{ number_format($item->corte_mitad,0) }} <br>
+                                                        @endif
                                                     </td>
                                                     <td rowspan="{{$filas}}">{{ $item->personal->nombres }} {{ $item->personal->apellido_1 }} {{ $item->personal->apellido_1 }}</td>
                                                 @endif
@@ -166,8 +184,8 @@
                                         <td><b>{{ number_format($cant_venta, 2) }}</b></td>
                                         <td>-</td>
                                         <td><b>{{ number_format($venta_total, 2) }}</b></td>
-                                        <td>-</td>
-                                        <td>-</td>
+                                        <td><b>{{ number_format($cant_saldo, 2) }}</b></td>
+                                        <td><b>{{ number_format($saldo_total, 2) }}</b></td>
                                         <td>-</td>
                                         <td><b>{{ number_format($transporte, 2) }}</b></td>
                                         <td>-</td>
@@ -255,48 +273,70 @@
                                     <th scope="col"> </th>
                                 </tr>
                             </thead>
+                            @php($fila=1)
                             <tbody>
                                 <tr>
-                                    <td>1.-</td>
+                                    <td>{{$fila++}}.-</td>
                                     <td>Compras</td>
                                     <td>{{ number_format($cant_compra, 0) }} unidades</td>
                                     <td>{{ number_format($compra_total, 2) }}</td>
                                     <td>-</td>
                                 </tr>
                                 <tr>
-                                    <td>2.-</td>
+                                    <td>{{$fila++}}.-</td>
                                     <td>Ventas</td>
                                     <td>{{ number_format($cant_venta, 0) }} unidades</td>
                                     <td>{{ number_format($venta_total, 2) }}</td>
                                     <td>{{ number_format($venta_total-$compra_total, 2) }}</td>
                                 </tr>
                                 <tr>
-                                    <td>3.-</td>
+                                    <td>{{$fila++}}.-</td>
                                     <td>Saldo</td>
                                     <td>{{ number_format($cant_compra-$cant_venta, 0) }} unidades</td>
                                     <td>{{ number_format(0, 2) }}</td>
                                     <td>-</td>
                                 </tr>
                                 <tr>
-                                    <td>4.-</td>
+                                    <td>{{$fila++}}.-</td>
                                     <td>Transporte</td>
                                     <td>{{ number_format(count($vueltas), 0) }} vueltas</td>
                                     <td>{{ number_format($transporte, 2) }}</td>
                                     <td>-</td>
                                 </tr>
                                 <tr>
-                                    <td>5.-</td>
-                                    <td>Chofer</td>
-                                    <td>{{ number_format(count($vueltas), 0) }} vueltas + 30 Bs</td>
-                                    <td>{{ number_format((count($vueltas)*120)+30, 2) }}</td>
+                                    <td>{{$fila++}}.-</td>
+                                    <td>Costo combustible</td>
+                                    <td>{{ number_format(count($vueltas), 0) }} vueltas</td>
+                                    <td>{{ number_format($costo_combustible, 2) }}</td>
                                     <td>-</td>
                                 </tr>
                                 <tr>
-                                    <td>6.-</td>
+                                    <td>{{$fila++}}.-</td>
+                                    <td>Refresco</td>
+                                    <td>{{ number_format(count($vueltas), 0) }} vueltas</td>
+                                    <td>{{ number_format($refresco, 2) }}</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>{{$fila++}}.-</td>
+                                    <td>Peaje</td>
+                                    <td>{{ number_format(count($vueltas), 0) }} vueltas</td>
+                                    <td>{{ number_format($peaje, 2) }}</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>{{$fila++}}.-</td>
+                                    <td>Chofer</td>
+                                    <td>{{ number_format(count($vueltas), 0) }} vueltas + {{$viatico}} Bs</td>
+                                    <td>{{ number_format((count($vueltas)*120)+$viatico, 2) }}</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>{{$fila++}}.-</td>
                                     <td>Combustible</td>
                                     <td>{{ number_format(count($combustible), 0) }} facturas</td>
                                     <td>{{ number_format($costo, 2) }}</td>
-                                    <td>-</td>
+                                    <td>{{ number_format($costo-$costo_combustible, 2)}}</td>
                                 </tr>
                             </tbody>
                         </table>

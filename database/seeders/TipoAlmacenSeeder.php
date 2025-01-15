@@ -14,6 +14,12 @@ class TipoAlmacenSeeder extends Seeder
     public function run(): void
     {
         DB::table('tipo_almacen')->insert([
+            'descripcion' => 'Ninguno',
+            'ubicacion' => 'Sin almacen',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('tipo_almacen')->insert([
             'descripcion' => 'Tienda',
             'ubicacion' => 'Av. Litoral',
             'created_at' => now(),

@@ -67,13 +67,9 @@
                                 <tbody>
                                     @php($compra=0)
                                     @php($venta=0)
-                                    @php($saldo=0)
                                     @php($transporte=0)
                                     @php($nro=0)
                                     @forelse ($vueltas as $item)
-                                        @php($compra = $compra + ($item->precio_compra / 1000) * $item->cantidad_compra)
-                                        @php($venta = $venta + ($item->precio_venta / 1000) * $item->cantidad_venta)
-                                        @php($saldo = $saldo + ($item->precio_saldo / 1000))
                                         @php($transporte = $transporte + $item->transporte)
                                         @php($nro++)
                                         <tr>
@@ -82,6 +78,7 @@
                                             <td>
                                                 @forelse ($item->comercioProductos as $comProd)
                                                     **{{$comProd->producto->descripcion}}<br>
+                                                    @php($compra = $compra + $comProd->precio_compra_total)
                                                 @empty
                                                     Sin productos
                                                 @endforelse
@@ -89,6 +86,7 @@
                                             <td>
                                                 @forelse ($item->comercioProductos as $comProd)
                                                     **({{number_format($comProd->cantidad_compra,0)}}x{{number_format($comProd->precio_compra,2)}}_Bs) ={{number_format($comProd->precio_compra_total,2)}}_Bs<br>
+                                                    @php($venta = $venta + $comProd->precio_venta_total)
                                                 @empty
                                                     0_Bs
                                                 @endforelse
