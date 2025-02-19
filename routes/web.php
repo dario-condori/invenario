@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/comercio/operacion/pdf/{fecha_comercio}', [ComercioController::class, 'comercioPdf'])->name('comercio.operacion.pdf');
     Route::get('/comercio/reporte/semanal/{fecha_comercio}', [ComercioController::class, 'reporteSemanal'])->name('comercio.reporte.semanal');
     Route::delete('/comercio/operacion/eliminar', [ComercioController::class, 'comercioOperacionEliminar'])->name('comercio.operacion.eliminar');
+    Route::get('/comercio/reporte/mensual/{fecha_comercio}', [ComercioController::class, 'reporteMensual'])->name('comercio.reporte.mensual');
 });
 
 Route::get('/dashboard', function () {

@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use DateTime;
 
 class ComercioController extends Controller
 {
@@ -417,5 +418,64 @@ class ComercioController extends Controller
         $comercio->delete();
 
         return to_route('comercio.listado',['fecha_comercio'=>$request->fecha_comercio]);
+    }
+
+    public function reporteMensual($fecha_comercio)
+    {
+        $fanterior = new Carbon($fecha_comercio);
+        $fsiguiente = new Carbon($fecha_comercio);
+        $fanterior->add(-1, 'month');
+        $fsiguiente->add(1, 'month');
+
+        $fecha = new DateTime($fecha_comercio);
+        $fecha->modify('last day of this month');
+        $ultimoDia = $fecha->format('Y-m-d');
+        // echo $fecha->format('Y-m-d');
+        $primerDia = $fecha->format('Y-m').'-01';
+        // dd($primerDia, $ultimoDia);
+        
+        $vueltas = Comercio::where('fecha', '>=', $primerDia)
+                            ->where('fecha', '<=', $ultimoDia)
+                            ->get();
+        
+        $combustible = Combustible::where('fecha', '>=', $primerDia)
+                            ->where('fecha', '<=', $ultimoDia)
+                            ->orderBy('fecha', 'ASC')->get();
+
+        $vehiculos = Vehiculo::orderBy('id', 'DESC')->get();
+        $personal = Personal::where('activo', true)->get();
+
+        $cant_compra=0;
+        $compra_total=0;
+        $cant_venta=0;
+        $venta_total=0;
+        $cant_saldo=0;
+        $saldo_total=0;
+        $transporte=0;
+        $refresco=0;
+        $peaje=0;
+        $viatico=0;
+        $costo_combustible=0;
+        $nro=0;
+        foreach($vueltas as $item){
+            $transporte = $transporte + $item->transporte;
+            $refresco = $refresco + $item->refresco;
+            $peaje = $peaje + $item->peaje;
+            $viatico = $viatico + $item->viatico;
+            $costo_combustible = $costo_combustible + $item->costo_combustible;
+            $nro++;
+            foreach($item->comercioProductos as $comProd){
+                $cant_compra += $comProd->cantidad_compra;
+                $compra_total += $comProd->precio_compra_total;
+                $cant_venta += $comProd->cantidad_venta;
+                $venta_total += $comProd->precio_venta_total;
+                $cant_saldo = $cant_saldo + ($comProd->cantidad_compra-$comProd->cantidad_venta);
+                $saldo_total = $saldo_total + ($comProd->precio_compra/1000)*($comProd->cantidad_compra-$comProd->cantidad_venta);
+            }
+
+        }
+
+        return view('comercio.reporteMensual', compact('primerDia', 'ultimoDia', 'vueltas', 'combustible', 'vehiculos', 'personal', 
+                'fanterior', 'fsiguiente','fecha_comercio'));
     }
 }

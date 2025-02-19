@@ -47,10 +47,22 @@
                     <p>Comercialización</p>
                 </a>
             </li>
+            <li class="nav-section">
+                <span class="sidebar-mini-icon">
+                    <i class="fa fa-ellipsis-h"></i>
+                </span>
+                <h4 class="text-section">Reportes</h4>
+            </li>
             <li id="mReporteSemanal" class="nav-item">
                 <a href="{{ route('comercio.reporte.semanal',['fecha_comercio'=>date('Y-m-d')]) }}">
-                    <i class="fas fa-dollar-sign"></i>
-                    <p>Reporte Semanal</p>
+                    <i class="far fa-chart-bar"></i>
+                    <p>Semanal</p>
+                </a>
+            </li>
+            <li id="mReporteMensual" class="nav-item">
+                <a href="{{ route('comercio.reporte.mensual',['fecha_comercio'=>date('Y-m-d')]) }}">
+                    <i class="fas fa-calendar"></i>
+                    <p>Mensual</p>
                 </a>
             </li>
             {{-- <li class="nav-item">
